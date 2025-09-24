@@ -2,7 +2,7 @@
 AMI_ID=ami-09c813fb71547fc4f
 SG_ID=sg-013a9c377a5c2354d
 ZONE_ID=Z09655201PB8BBQ9OOULW
-DOMAIN_NAME="devopswithdinesh.com"
+DOMAIN_NAME="devopswithdinesh.shop"
 
 for instance in $@
 do
