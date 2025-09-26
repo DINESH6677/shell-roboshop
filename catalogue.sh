@@ -12,7 +12,7 @@ SCRIPT_DIR=$PWD
 LOG_FILE="$LOG_FOLDER/$SCRIPT_NAME.log"
 MONGODB_HOST=mongodb.devopswithdinesh.shop
 
-mkdir -p $LOGS_FOLDER
+mkdir -p $LOG_FOLDER
 echo "$Y Script started execution at: $(date) $N" | tee -a $LOG_FILE
 
 if [ $USER_ID -ne 0 ];then
@@ -65,7 +65,7 @@ cd /app &>>$LOG_FILE
 npm install &>>$LOG_FILE
 validate $? Dependencies_Installed
 
-cp $SCRIPT_DIR/catalogue.service /etc/systemd/system/catalogue.service
+cp $SCRIPT_DIR/catalogue.service /etc/systemd/system/catalogue.service &>>$LOG_FILE
 VALIDATE $? "Copy systemctl service"
 
 systemctl daemon-reload &>>$LOG_FILE
@@ -77,7 +77,7 @@ validate $? Catalogue_Enabled
 systemctl start catalogue &>>$LOG_FILE
 validate $? Catalogue_Started
 
-cp $SCRIPT_DIR/mongo.repo /etc/yum.repos.d/mongo.repo
+cp $SCRIPT_DIR/mongo.repo /etc/yum.repos.d/mongo.repo &>>$LOG_FILE
 VALIDATE $? "Copy mongo repo"
 
 dnf install mongodb-mongosh -y &>>$LOG_FILE
