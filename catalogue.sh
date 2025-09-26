@@ -24,7 +24,7 @@ validate(){
     if [ $1 -ne 0 ]; then
         echo " $R ERROR: $2 is unsuccesful $N " | tee -a $LOG_FILE
     else
-        echo " $Y $2 is Successfully completed  $N " | tee -a $LOG_FILE
+        echo " $Y Successfully $2 Executed  $N " | tee -a $LOG_FILE
     fi
 }
 
@@ -55,7 +55,7 @@ cd /app  &>>$LOG_FILE
 validate $? Directory_Changed
 
 rm -rf /app/* &>>$LOG_FILE
-VALIDATE $? "Removing existing code"
+validate $? "Removing existing code"
 
 unzip /tmp/catalogue.zip &>>$LOG_FILE
 validate $? catalogue_Unzipped
@@ -66,7 +66,7 @@ npm install &>>$LOG_FILE
 validate $? Dependencies_Installed
 
 cp $SCRIPT_DIR/catalogue.service /etc/systemd/system/catalogue.service &>>$LOG_FILE
-VALIDATE $? "Copy systemctl service"
+validate $? "Copy systemctl service"
 
 systemctl daemon-reload &>>$LOG_FILE
 validate $? Daemon_reloaded
