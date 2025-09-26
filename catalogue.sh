@@ -24,7 +24,7 @@ validate(){
     if [ $1 -ne 0 ]; then
         echo -e " $R ERROR: $2 is unsuccesful $N " | tee -a $LOG_FILE
     else
-        echo -e " $G Successfully$N $Y$2$N $GExecuted  $N " | tee -a $LOG_FILE
+        echo -e " $G Successfully$N $Y$2$N $G Executed  $N " | tee -a $LOG_FILE
     fi
 }
 
