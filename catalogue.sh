@@ -13,7 +13,7 @@ LOG_FILE="$LOG_FOLDER/$SCRIPT_NAME.log"
 MONGODB_HOST=mongodb.devopswithdinesh.shop
 
 mkdir -p $LOG_FOLDER
-echo "$Y Script started execution at: $(date) $N" | tee -a $LOG_FILE
+echo " $Y Script started execution at: $(date) $N " | tee -a $LOG_FILE
 
 if [ $USER_ID -ne 0 ];then
     echo " $R Error: you need root privileges to continue $N " | tee -a $LOG_FILE
@@ -34,18 +34,18 @@ validate $? Disbaled_Nodejs
 dnf module enable nodejs:20 -y &>>$LOG_FILE
 validate $? Enabled_Nodejs
 
-dnf install nodejs -y
+dnf install nodejs -y &>>$LOG_FILE
 validate $? Installing_Nodejs
 
 id roboshop &>>$LOG_FILE
-if[ $? -ne 0 ];then
+if [ $? -ne 0 ]; then
     useradd --system --home /app --shell /sbin/nologin --comment "roboshop system user" roboshop &>>$LOG_FILE
     validate $? Useradded
 else
     echo " user was already added"
 fi
 
-mkdir -p /app 
+mkdir -p /app &>>$LOG_FILE
 validate $? Directory_Created
 
 curl -o /tmp/catalogue.zip https://roboshop-artifacts.s3.amazonaws.com/catalogue-v3.zip &>>$LOG_FILE
@@ -54,7 +54,7 @@ validate $? Catalogur_zipfile_Downloaded
 cd /app  &>>$LOG_FILE
 validate $? Directory_Changed
 
-rm -rf /app/*
+rm -rf /app/* &>>$LOG_FILE
 VALIDATE $? "Removing existing code"
 
 unzip /tmp/catalogue.zip &>>$LOG_FILE
@@ -91,5 +91,5 @@ else
     echo -e "Catalogue products already loaded ... $Y SKIPPING $N"
 fi
 
-systemctl restart catalogue
+systemctl restart catalogue &>>$LOG_FILE
 VALIDATE $? "Restarted catalogue"
