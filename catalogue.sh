@@ -13,18 +13,18 @@ LOG_FILE="$LOG_FOLDER/$SCRIPT_NAME.log"
 MONGODB_HOST=mongodb.devopswithdinesh.shop
 
 mkdir -p $LOG_FOLDER
-echo " $Y Script started execution at: $(date) $N " | tee -a $LOG_FILE
+echo -e " $Y Script started execution at: $(date) $N " | tee -a $LOG_FILE
 
 if [ $USER_ID -ne 0 ];then
-    echo " $R Error: you need root privileges to continue $N " | tee -a $LOG_FILE
+    echo -e " $R Error: you need root privileges to continue $N " | tee -a $LOG_FILE
     exit 1
 fi
 
 validate(){
     if [ $1 -ne 0 ]; then
-        echo " $R ERROR: $2 is unsuccesful $N " | tee -a $LOG_FILE
+        echo -e " $R ERROR: $2 is unsuccesful $N " | tee -a $LOG_FILE
     else
-        echo " $Y Successfully $2 Executed  $N " | tee -a $LOG_FILE
+        echo -e " $G Successfully $2 Executed  $N " | tee -a $LOG_FILE
     fi
 }
 
@@ -42,7 +42,7 @@ if [ $? -ne 0 ]; then
     useradd --system --home /app --shell /sbin/nologin --comment "roboshop system user" roboshop &>>$LOG_FILE
     validate $? Useradded
 else
-    echo " user was already added"
+    echo -e " $Y user was already added $N"
 fi
 
 mkdir -p /app &>>$LOG_FILE
@@ -78,7 +78,7 @@ systemctl start catalogue &>>$LOG_FILE
 validate $? Catalogue_Started
 
 cp $SCRIPT_DIR/mongo.repo /etc/yum.repos.d/mongo.repo &>>$LOG_FILE
-VALIDATE $? "Copy mongo repo"
+validate $? "Copy mongo repo"
 
 dnf install mongodb-mongosh -y &>>$LOG_FILE
 validate $? Mongodb_Installed
@@ -86,10 +86,10 @@ validate $? Mongodb_Installed
 INDEX=$(mongosh mongodb.devopswithdinesh.shop --quiet --eval "db.getMongo().getDBNames().indexOf('catalogue')")
 if [ $INDEX -le 0 ]; then
     mongosh --host $MONGODB_HOST </app/db/master-data.js &>>$LOG_FILE
-    VALIDATE $? "Load catalogue products"
+    validate $? "Load catalogue products"
 else
     echo -e "Catalogue products already loaded ... $Y SKIPPING $N"
 fi
 
 systemctl restart catalogue &>>$LOG_FILE
-VALIDATE $? "Restarted catalogue"
+validate $? "Restarted catalogue"
