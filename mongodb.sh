@@ -23,7 +23,7 @@ fi
 
 validate(){
     if [ $1 -eq 0 ];then
-        echo -e " $G $2 successfully $N " | tee -a $LOG_FILE
+        echo -e " $G $2 successfully. $N " | tee -a $LOG_FILE
     else
         echo -e " $R ERROR: While executing so......$N  $Y skipping $N" | tee -a $LOG_FILE
     fi

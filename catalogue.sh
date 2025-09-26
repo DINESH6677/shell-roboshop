@@ -1,30 +1,30 @@
 #!/bin/bash
 USER_ID=$(id -u)
 
-R="\e[31m]"
-G="\e[32m]"
-Y="\e[33m]"
-W="\e[0m]"
+R="\e[31m"
+G="\e[32m"
+Y="\e[33m"
+W="\e[0m"
 
 LOG_FOLDER="/var/log/shell-roboshop"
-SCRIPT_NAME= $( echo $0 | cut -d "." -f1 )
+SCRIPT_NAME=$( echo $0 | cut -d "." -f1 )
 SCRIPT_DIR=$PWD
 LOG_FILE="$LOG_FOLDER/$SCRIPT_NAME.log"
 MONGODB_HOST=mongodb.devopswithdinesh.shop
 
 mkdir -p $LOGS_FOLDER
-echo "Script started executed at: $(date)" | tee -a $LOG_FILE
+echo "$Y Script started execution at: $(date) $N" | tee -a $LOG_FILE
 
 if [ $USER_ID -ne 0 ];then
-    echo " Error: you need root privileges to continue " | tee -a $LOG_FILE
+    echo " $R Error: you need root privileges to continue $N " | tee -a $LOG_FILE
     exit 1
 fi
 
 validate(){
     if [ $1 -ne 0 ]; then
-        echo " ERROR: $2 is unsuccesful " | tee -a $LOG_FILE
+        echo " $R ERROR: $2 is unsuccesful $N " | tee -a $LOG_FILE
     else
-        echo " $2 is Successfully completed " | tee -a $LOG_FILE
+        echo " $Y $2 is Successfully completed  $N " | tee -a $LOG_FILE
     fi
 }
 
