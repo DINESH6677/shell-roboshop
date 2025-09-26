@@ -18,7 +18,7 @@ if [ $USER_ID -ne 0 ];then
     echo -e" $R Error: you require root privileges $N" | tee -a $LOG_FILE
     exit 1
 else
-    echo -e " $G You are a root user proceed $N" | tee -a $LOG_FILE
+    echo -e " $G Congrats You are a root user.so,you can proceed $N" | tee -a $LOG_FILE
 fi
 
 validate(){
