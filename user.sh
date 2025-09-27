@@ -67,7 +67,7 @@ validate $? "changed directory to /app"
 npm install  &>>$LOG_FILE
 validate $? "downloading dependencies"
 
-sid -i $SCRIPT_DIR/user.service /etc/systemd/system/user.service &>>$LOG_FILE
+cp  $SCRIPT_DIR/user.service /etc/systemd/system/user.service &>>$LOG_FILE
 validate $? "created user service"
 
 systemctl daemon-reload &>>$LOG_FILE
