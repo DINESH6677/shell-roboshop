@@ -9,6 +9,7 @@ W="\e[0m"
 LOGS_FOLDER="/var/log/shell-roboshop"
 SCRIPT_NAME=$( echo $0 | cut -d "." -f1 )
 LOG_FILE="$LOGs_FOLDER/$SCRIPT_NAME.log"
+SCRIPT_DIR=$PWD
 
 start_time=$(date +%s)
 mkdir -p $LOGS_FOLDER
@@ -66,11 +67,11 @@ validate $? "changed directory to /app"
 npm install  &>>$LOG_FILE
 validate $? "downloading dependencies"
 
-sid -i user.service /etc/systemd/system/user.service &>>$LOG_FILE
+sid -i $SCRIPT_DIR/user.service /etc/systemd/system/user.service &>>$LOG_FILE
 validate $? "created user service"
 
 systemctl daemon-reload &>>$LOG_FILE
-validate $? "daemin reloaded"
+validate $? "daemon reloaded"
 
 systemctl enable user  &>>$LOG_FILE
 validate $? "enabled user"
