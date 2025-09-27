@@ -1,0 +1,15 @@
+#!/bin/bash
+[Unit]
+Description = User Service
+[Service]
+User=roboshop
+Environment=MONGO=true
+// highlight-start
+Environment=REDIS_URL='redis://redis.devopswithdinesh.shop:6379'
+Environment=MONGO_URL="mongodb://mongodb.devopswithdinesh.shop:27017/users"
+// highlight-end
+ExecStart=/bin/node /app/server.js
+SyslogIdentifier=user
+
+[Install]
+WantedBy=multi-user.target
