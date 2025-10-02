@@ -35,7 +35,7 @@ validate(){
 cp mongo.repo /etc/yum.repos.d/mongo.repo &>>$LOG_FILE
 validate $? "mongorepo_added"
 
-dnf install mongodb-org -y &>>$LOG_FILE
+dnf install mongodb-org -y  &>>$LOG_FILE
 validate $? "mongodb_installed"
 
 systemctl enable mongod &>>$LOG_FILE
